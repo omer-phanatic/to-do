@@ -1,28 +1,56 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app >
+    <v-row class="mx-auto">
+      <v-col>
+        <v-form>
+          <v-row>
+            <v-col v-model="hasTextValue">
+              <v-text-field
+               v-model="task"
+               placeholder="Get shit done"></v-text-field>
+              <v-btn 
+               :disabled="!hasTextValue"
+               @click ="submit">Add a task</v-btn>
+            </v-col>
+          </v-row>
+        </v-form>
+        <TodoList v-bind:todos="todos" />
+      </v-col>
+    </v-row>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TodoList from "./components/TodoList";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    TodoList,
+  },
+
+  data: () => ({
+    task:"",
+    todos: [
+
+      ],
+
+  }),
+
+    methods: {
+      submit(){
+        this.todos.push(this.task);
+        this.task="";
+      }
+  },
+  computed: {
+    hasTextValue() {
+     return this.task;
+    },
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+  
 </style>
